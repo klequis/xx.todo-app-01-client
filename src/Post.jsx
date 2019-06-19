@@ -1,4 +1,5 @@
 import React from "react";
+import fetchJson from './fetchJson'
 class Post extends React.Component  {
 
   state = {
@@ -11,35 +12,39 @@ class Post extends React.Component  {
     })
   }
 
-  handlePostClick = async () => {
-    const { setData } = this.props
-    const r1 = await fetch('http://localhost:3030/api/todo', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        title: this.state.title
+  handleSubmit = async (e) => {
+    const { setData, setError } = this.props
+    try {
+      e.preventDefault()
+      const url = 'http://localhost:3030/api/todo'
+      const r1 = await fetchJson(url, {
+        method: 'POST',
+        body: JSON.stringify({ title: this.state.title })
       })
-    })
-    const r2 = await r1.json()
-    setData(r2)
+      console.log('SUCCESS');
+      const r2 = await r1.json()
+      setData(r2)
+    } catch (e) {
+      console.log('FAILURE');
+      setError(e)
+      console.log('ERROR:', e)
+    }
   }
 
   render() {
     return (
-      <div>
+      <form onSubmit={this.handleSubmit}>
         <input 
           type='text' 
           value={this.state.title} 
           onChange={this.handleInputChagne}
           placeholder='title / description'
         />
-        <button
-          onClick={this.handlePostClick}
-        >POST</button>
-      </div>
+        <input
+          type='submit'
+          value='POST'
+        />
+      </form>
     )
   }
 }

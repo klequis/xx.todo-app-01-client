@@ -1,6 +1,5 @@
 
 const checkErrors = (res) => {
-  console.log('typeof res', typeof res)
   if (!res.ok) {
     return Promise.reject({
       status: res.status,
@@ -11,12 +10,14 @@ const checkErrors = (res) => {
 }
 
 const fetchJson = async (url, options={}) => {
+  let headers = {
+    ...options.headers,
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+  }
   const r1 = await fetch(url, {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    }
+    ...options,
+    headers,
   })
   const r2 = checkErrors(r1)
   return r2

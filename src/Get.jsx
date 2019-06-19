@@ -1,9 +1,8 @@
 import React from "react"
 import { isEmpty } from 'ramda'
 import fetchJson from './fetchJson'
-import ErrorBoundary from './ErrorBoundary'
 
-class Get extends React.Component  {
+class GetForm extends React.Component  {
 
   state = {
     id: '',
@@ -24,23 +23,18 @@ class Get extends React.Component  {
   }
 
   handleSubmit = async (e) => {
-    // e.preventDefault()
+    const { setData, setError } = this.props
     try {
-      const { setData } = this.props
+      e.preventDefault()
       const url = this.getUrl()
       const r1 = await fetchJson(url, {
         method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }
       })
       console.log('SUCCESS');
-      console.log('r1', r1)
       const r2 = await r1.json()
-      console.log('r2', r2);
       setData(r2)
     } catch (e) {
+      setError(e)
       console.log('FAILURE');
       console.log('ERROR:', e)
     }
@@ -48,25 +42,24 @@ class Get extends React.Component  {
 
 
   render() {
-    console.log('get render')
-    
     return (
-      <ErrorBoundary>
+      <form onSubmit={this.handleSubmit}>
         <input
           type='text'
           value={this.state.id}
           onChange={this.handleInputChagne}
           placeholder='empty for all or _id'
         />
-        <button
-          onClick={this.handleSubmit}
-        >GET</button>
-      </ErrorBoundary>
+        <input
+          type='submit'
+          value='GET'
+        />
+      </form>
     )
   }
 }
 
-export default Get
+export default GetForm
 
 
 /*

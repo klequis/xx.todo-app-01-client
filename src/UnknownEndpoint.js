@@ -1,33 +1,20 @@
 import React from "react";
+import fetchJson from "./fetchJson";
 
 class UnknownEndpoint extends React.Component {
 
   handleSubmit = async e => {
-    e.preventDefault();
+    const { setData, setError } = this.props;
     try {
-      const { setData } = this.props;
-      const r1 = await fetch("http://localhost:3030/api/unknown", {
+      e.preventDefault();  
+      const r1 = await fetchJson("http://localhost:3030/api/unknown", {
         method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        }
-      });
-      console.log('r1', r1);
-      console.log('headers', r1.headers);
-      console.log('status', r1.status);
-      console.log('statusText', r1.statusText)
-      console.log('url', r1.url);
-      
-      
-      
-      
-      if (!r1.ok) {
-        throw new Error(`HTTP error, status = ${r1.status}`);
-      }
+      })
+      console.log('SUCCESS')
       const r2 = await r1.json();
       setData(r2);
     } catch (e) {
+      setError(e)
       console.log("ERROR:", e);
     }
   };
