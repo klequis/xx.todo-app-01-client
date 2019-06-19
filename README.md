@@ -1,4 +1,6 @@
-# A minimal implementation of a React client to call the books API
+# todo-app-01-client
+
+A minimal implementation of a React client to call the books API and examine returned error messages.
 
 ## What 'book'?
 
