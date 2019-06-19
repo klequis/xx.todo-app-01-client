@@ -1,5 +1,8 @@
-import React from "react";
+import React from "react"
+import { connect } from 'react-redux'
 import fetchJson from './fetchJson'
+import { todoDeleteRequest } from 'redux/todo/actions'
+
 class Post extends React.Component  {
 
   state = {

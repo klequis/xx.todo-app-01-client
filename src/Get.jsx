@@ -1,6 +1,12 @@
 import React from "react"
+import { connect } from 'react-redux'
 import { isEmpty } from 'ramda'
-import fetchJson from './fetchJson'
+// import fetchJson from './fetchJson'
+import { todosReadRequest, todosReadByIdRequest, todoDeleteRequest } from 'redux/todo/actions'
+import { getAllTodos } from 'redux/todo/selectors'
+import { TODOS_READ_REQUEST_KEY } from 'redux/todo/constants'
+import { getRequest } from 'redux/requests/selectors';
+
 
 class GetForm extends React.Component  {
 
@@ -26,13 +32,13 @@ class GetForm extends React.Component  {
     const { setData, setError } = this.props
     try {
       e.preventDefault()
-      const url = this.getUrl()
-      const r1 = await fetchJson(url, {
-        method: 'GET',
-      })
-      console.log('SUCCESS');
-      const r2 = await r1.json()
-      setData(r2)
+      if (isEmpty(this.state.id)) {
+        await this.props.todosReadRequest()
+      } else {
+        await this.props.todosReadByIdRequest(this.state.id)
+      }
+      
+      setData(this.props.todos)
     } catch (e) {
       setError(e)
       console.log('FAILURE');
@@ -59,22 +65,13 @@ class GetForm extends React.Component  {
   }
 }
 
-export default GetForm
+const actions = { todosReadRequest, todosReadByIdRequest, todoDeleteRequest }
 
+const mapStateToProps = (state) => {
+  return {
+    todos: getAllTodos(state),
+    todosReadRequestStatus: getRequest(state, TODOS_READ_REQUEST_KEY)
+  }
+}
 
-/*
-
-<form onSubmit={this.handleSubmit}>
-        <input
-          type='text'
-          value={this.state.id}
-          onChange={this.handleInputChagne}
-          placeholder='empty for all or _id'
-        />
-        <input
-          type='submit'
-          value='GET'
-        />
-      </form>
-
-*/
+export default connect(mapStateToProps, actions)(GetForm)
