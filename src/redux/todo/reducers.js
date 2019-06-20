@@ -1,5 +1,5 @@
 import { TODO_CREATE_KEY, TODOS_READ_KEY } from './constants'
-import { blue } from 'logger'
+import { blue, green } from 'logger'
 export function todosReducer(
   state = [],
   action
@@ -9,6 +9,7 @@ export function todosReducer(
   blue('action', action)
   switch (action.type) {
     case TODOS_READ_KEY:
+      green('7. reducer-TODOS_READ_KEY')
       return action.payload
     case TODO_CREATE_KEY:
       return [...state, action.payload[0]]

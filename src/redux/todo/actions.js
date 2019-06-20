@@ -9,9 +9,10 @@ import {
 import { createRequestThunk } from '../action-helpers'
 import api from 'api'
 import { red } from 'logger'
-import { purple } from 'logger'
+import { purple, green } from 'logger'
 
 export const todoAdd = (newTodo) => {
+  green('6. actions-todosRead')
   return {
     type: TODO_CREATE_KEY,
     payload: newTodo

@@ -2,6 +2,7 @@ import React from "react"
 import { connect } from 'react-redux'
 import { todoDeleteRequest } from 'redux/todo/actions'
 import { getAllTodos } from 'redux/todo/selectors'
+import { green } from 'logger'
 
 class Delete extends React.Component  {
 
@@ -19,8 +20,13 @@ class Delete extends React.Component  {
     e.preventDefault()
     const { setData, setError } = this.props
     try {
-      await this.props.todoDeleteRequest()
+      green('1 beforeCall-todoDeleteRequest')
+      await this.props.todoDeleteRequest(this.state.id)
+      green('9. afterCall-todoDeleteRequest')
+      
+      green('10. beforeCall - setData')
       setData(this.props.todos)
+      green('11. afterCall - setData')
     } catch (e) {
       console.log('FAILURE');
       setError(e)

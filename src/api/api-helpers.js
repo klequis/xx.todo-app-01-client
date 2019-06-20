@@ -1,3 +1,4 @@
+import fetch from 'cross-fetch'
 import { orange } from 'logger'
 
 const logRequest = (url, options, headers) => {
@@ -20,7 +21,6 @@ export const fetchJson = (url, options = {}) => {
       ...options,
       headers,
     }).then(res => {
-      orange('res.headers', res)
       const { status } = res
       if (status >= 200 && status < 300) {
         return res.json()
