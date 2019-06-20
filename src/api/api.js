@@ -1,5 +1,5 @@
 import { fetchJson } from './api-helpers'
-import { pink } from 'logger'
+import { orange } from 'logger'
 
 // const rootUrl = process.env.NODE_ENV === 'development' ? '' : 'https://api.klequis-todo.tk'
 // const rootUrl = 'https://api.klequis-todo.tk'
@@ -18,7 +18,7 @@ export default {
           method: 'GET',
         }
       )
-      pink('data', data)
+      orange('data', data)
       return data
     },
     async readById(id) {

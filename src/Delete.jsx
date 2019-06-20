@@ -1,6 +1,7 @@
 import React from "react"
-import fetchJson from './fetchJson'
-import ErrorBoundary from './ErrorBoundary'
+import { connect } from 'react-redux'
+import { todoDeleteRequest } from 'redux/todo/actions'
+import { getAllTodos } from 'redux/todo/selectors'
 
 class Delete extends React.Component  {
 
@@ -15,19 +16,14 @@ class Delete extends React.Component  {
   }
 
   handleSubmit = async (e) => {
+    e.preventDefault()
     const { setData, setError } = this.props
     try {
-      e.preventDefault()
-      const url = `http://localhost:3030/api/todo/${this.state.id}`
-      const r1 = await fetchJson(url, {
-        method: 'DELETE',
-      })
-      console.log('SUCCESS')
-      const r2 = await r1.json()
-      setData(r2)
+      await this.props.todoDeleteRequest()
+      setData(this.props.todos)
     } catch (e) {
-      setError(e)
       console.log('FAILURE');
+      setError(e)
       console.log('ERROR:', e)
     }
   }
@@ -50,4 +46,12 @@ class Delete extends React.Component  {
   }
 }
 
-export default Delete
+const actions = { todoDeleteRequest }
+
+const mapStateToProps = (state) => {
+  return {
+    todos: getAllTodos(state),
+  }
+}
+
+export default connect(mapStateToProps, actions)(Delete)

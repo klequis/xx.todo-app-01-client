@@ -2,11 +2,8 @@ import React from "react"
 import { connect } from 'react-redux'
 import { isEmpty } from 'ramda'
 // import fetchJson from './fetchJson'
-import { todosReadRequest, todosReadByIdRequest, todoDeleteRequest } from 'redux/todo/actions'
+import { todosReadRequest, todosReadByIdRequest } from 'redux/todo/actions'
 import { getAllTodos } from 'redux/todo/selectors'
-import { TODOS_READ_REQUEST_KEY } from 'redux/todo/constants'
-import { getRequest } from 'redux/requests/selectors';
-
 
 class GetForm extends React.Component  {
 
@@ -18,14 +15,6 @@ class GetForm extends React.Component  {
     this.setState({
       id: e.target.value
     })
-  }
-
-  getUrl = () => {
-    if (isEmpty(this.state.id)) {
-      return 'http://localhost:3030/api/todo'
-    } else {
-      return `http://localhost:3030/api/todo/${this.state.id}`
-    }    
   }
 
   handleSubmit = async (e) => {
@@ -65,12 +54,12 @@ class GetForm extends React.Component  {
   }
 }
 
-const actions = { todosReadRequest, todosReadByIdRequest, todoDeleteRequest }
+const actions = { todosReadRequest, todosReadByIdRequest }
 
 const mapStateToProps = (state) => {
   return {
     todos: getAllTodos(state),
-    todosReadRequestStatus: getRequest(state, TODOS_READ_REQUEST_KEY)
+    // todosReadRequestStatus: getRequest(state, TODOS_READ_REQUEST_KEY)
   }
 }
 
