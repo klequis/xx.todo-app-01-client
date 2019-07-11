@@ -1,18 +1,18 @@
 import {
   TODO_CREATE_KEY,
-  TODOS_READ_REQUEST_KEY,
-  TODOS_READ_KEY,
   TODOS_CREATE_REQUEST_KEY,
+  TODOS_DELETE_REQUEST_KEY,
+  TODOS_READ_KEY,
   TODOS_READ_BY_ID_REQUEST_KEY,
-  TODOS_DELETE_REQUEST_KEY
+  TODOS_READ_REQUEST_KEY, 
+  TODOS_UPDATE_REQUEST_KEY
 } from './constants'
 import { createRequestThunk } from '../action-helpers'
 import api from 'api'
 import { red } from 'logger'
-import { purple, green } from 'logger'
+
 
 export const todoAdd = (newTodo) => {
-  green('6. actions-todosRead')
   return {
     type: TODO_CREATE_KEY,
     payload: newTodo
@@ -21,7 +21,6 @@ export const todoAdd = (newTodo) => {
 
 // Read
 export const todosRead = (todos) => {
-  purple('todosRead: todos', todos)
   return {
     type: TODOS_READ_KEY,
     payload: todos

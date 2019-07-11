@@ -2,8 +2,8 @@ import React from "react"
 import { connect } from 'react-redux'
 import { isEmpty } from 'ramda'
 // import fetchJson from './fetchJson'
-import { todosReadRequest, todosReadByIdRequest } from 'redux/todo/actions'
-import { getAllTodos } from 'redux/todo/selectors'
+import { todosReadRequest, todosReadByIdRequest } from 'store/todo/actions'
+import { getAllTodos } from 'store/todo/selectors'
 
 class GetForm extends React.Component  {
 

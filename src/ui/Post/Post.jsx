@@ -1,18 +1,17 @@
 import React from "react"
 import { connect } from 'react-redux'
-import { todoDeleteRequest } from 'redux/todo/actions'
-import { getAllTodos } from 'redux/todo/selectors'
-import { green } from 'logger'
+import { todoCreateRequest } from 'store/todo/actions'
+import { getAllTodos } from 'store/todo/selectors'
 
-class Delete extends React.Component  {
+class Post extends React.Component  {
 
   state = {
-    id: '',
+    title: '',
   }
 
   handleInputChagne = (e) => {
     this.setState({
-      id: e.target.value
+      title: e.target.value
     })
   }
 
@@ -20,13 +19,8 @@ class Delete extends React.Component  {
     e.preventDefault()
     const { setData, setError } = this.props
     try {
-      green('1 beforeCall-todoDeleteRequest')
-      await this.props.todoDeleteRequest(this.state.id)
-      green('9. afterCall-todoDeleteRequest')
-      
-      green('10. beforeCall - setData')
+      await this.props.todoCreateRequest({ title: this.state.title })
       setData(this.props.todos)
-      green('11. afterCall - setData')
     } catch (e) {
       console.log('FAILURE');
       setError(e)
@@ -39,20 +33,20 @@ class Delete extends React.Component  {
       <form onSubmit={this.handleSubmit}>
         <input 
           type='text' 
-          value={this.state.id} 
+          value={this.state.title} 
           onChange={this.handleInputChagne}
-          placeholder='_id'
+          placeholder='title / description'
         />
         <input
           type='submit'
-          value='DELETE'
+          value='POST'
         />
       </form>
     )
   }
 }
-
-const actions = { todoDeleteRequest }
+                  
+const actions = { todoCreateRequest }
 
 const mapStateToProps = (state) => {
   return {
@@ -60,4 +54,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, actions)(Delete)
+export default connect(mapStateToProps, actions)(Post)

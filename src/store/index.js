@@ -1,5 +1,5 @@
 import { applyMiddleware, compose, createStore } from 'redux'
-import thunkMiddleware from 'redux-thunk'
+import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 // import monitorReducerEnhancer from './monitorReducer'
@@ -7,7 +7,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { rootReducer } from './root-reducer'
 
 export default function configureStore() {
-  const middlewares = [/*loggerMiddleware,*/ thunkMiddleware]
+  const middlewares = [/*loggerMiddleware,*/ thunk]
   const middleWareEnhancer = applyMiddleware(...middlewares)
 
   const enhancers = [

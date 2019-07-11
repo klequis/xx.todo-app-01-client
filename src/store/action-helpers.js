@@ -6,7 +6,7 @@ import {
   requestFailed
 } from './requests/actions'
 
-import { pink } from 'logger'
+// import { pink } from 'logger'
 
 export const logError = (err, key) => {
   red(`actions.logError(key:${key})`, err)
@@ -21,9 +21,9 @@ export const createRequestThunk = ({
 }) => {
   return (...args) => async dispatch => {
     const requestKey = typeof key === 'function' ? key(...args) : key
-    if (requestKey === 'TODOS_CREATE_REQUEST_KEY') {
-      pink('createRequestThunk: calling create')
-    }
+    // if (requestKey === 'TODOS_CREATE_REQUEST_KEY') {
+    //   pink('createRequestThunk: calling create')
+    // }
     start.map(async actionCreator => {
       await dispatch(actionCreator())
     })
